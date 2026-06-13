@@ -159,6 +159,122 @@
             });
         });
 
+        function getSkeletonForUrl(urlPath) {
+            const path = urlPath.split('?')[0]; // Hapus query string
+
+            // 1. Skeleton untuk Formulir (Tambah/Edit)
+            if (path.endsWith('/create') || path.includes('/edit') || /\/(students|books)\/[^\/]+\/(edit|create)/.test(path)) {
+                return `
+                    <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
+                        <!-- Header Form -->
+                        <div class="flex flex-col gap-2">
+                            <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
+                            <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
+                        </div>
+                        
+                        <!-- Form Card -->
+                        <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-6 shadow-sm max-w-2xl">
+                            <div class="space-y-5">
+                                <div class="space-y-2">
+                                    <div class="h-4 bg-slate-200 rounded-lg w-20"></div>
+                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 bg-slate-200 rounded-lg w-24"></div>
+                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-4 bg-slate-200 rounded-lg w-16"></div>
+                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 pt-4 border-t border-slate-100">
+                                <div class="h-10 bg-slate-200 rounded-xl w-24"></div>
+                                <div class="h-10 bg-sky-200 rounded-xl w-32"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 2. Skeleton untuk Dashboard Utama
+            if (path === '/' || path === '/dashboard' || path === '') {
+                return `
+                    <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
+                        <!-- Greeting -->
+                        <div class="flex flex-col gap-2">
+                            <div class="h-8 bg-slate-200 rounded-2xl w-72 sm:w-96"></div>
+                            <div class="h-4 bg-slate-200 rounded-xl w-64 sm:w-80"></div>
+                        </div>
+                        
+                        <!-- Main Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Left Column -->
+                            <div class="lg:col-span-1 flex flex-col gap-6">
+                                <div class="h-[300px] bg-slate-200 rounded-3xl"></div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="h-28 bg-slate-200 rounded-2xl"></div>
+                                    <div class="h-28 bg-slate-200 rounded-2xl"></div>
+                                    <div class="h-28 bg-slate-200 rounded-2xl"></div>
+                                    <div class="h-28 bg-slate-200 rounded-2xl"></div>
+                                    <div class="col-span-2 h-28 bg-slate-200 rounded-2xl"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column (Table) -->
+                            <div class="lg:col-span-2">
+                                <div class="h-[580px] bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-4 shadow-sm">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div class="space-y-2">
+                                            <div class="h-6 bg-slate-200 rounded-xl w-36"></div>
+                                            <div class="h-4 bg-slate-200 rounded-lg w-48"></div>
+                                        </div>
+                                        <div class="h-6 bg-slate-200 rounded-full w-20"></div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                                        <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                                        <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                                        <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                                        <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 3. Skeleton Default untuk Tabel List (Siswa & Buku)
+            return `
+                <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
+                    <!-- Title Header -->
+                    <div class="flex flex-col gap-2">
+                        <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
+                        <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
+                    </div>
+                    
+                    <!-- Table Card -->
+                    <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-4 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="space-y-2">
+                                <div class="h-6 bg-slate-200 rounded-xl w-40"></div>
+                                <div class="h-4 bg-slate-200 rounded-lg w-56"></div>
+                            </div>
+                            <div class="h-10 bg-slate-200 rounded-xl w-36"></div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="h-8 bg-slate-50 rounded-lg w-full"></div>
+                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function navigateTo(url, push = true) {
             const main = document.querySelector('main');
             
@@ -170,35 +286,10 @@
                 clearInterval(window.countdownTimer);
             }
 
-            // Tampilkan skeleton loader dengan transisi halus
+            // Tampilkan skeleton loader dengan transisi halus sesuai URL target
             main.style.opacity = '0.4';
             setTimeout(() => {
-                main.innerHTML = `
-                    <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
-                        <!-- Header skeleton -->
-                        <div class="flex flex-col gap-2">
-                            <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
-                            <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
-                        </div>
-                        
-                        <!-- Cards Grid skeleton -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
-                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
-                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
-                        </div>
-                        
-                        <!-- Table skeleton -->
-                        <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-4 shadow-sm">
-                            <div class="h-6 bg-slate-200 rounded-xl w-32"></div>
-                            <div class="space-y-4 mt-2">
-                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
-                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
-                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                main.innerHTML = getSkeletonForUrl(url);
                 main.style.opacity = '1';
             }, 100);
 
