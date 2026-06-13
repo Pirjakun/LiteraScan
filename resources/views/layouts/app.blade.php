@@ -408,6 +408,43 @@
                 };
             }
         });
+
+        // Global RFID UID automatic input formatter (Uppercase Hex spaced every 2 characters)
+        document.addEventListener('input', function (e) {
+            if (e.target && e.target.id === 'rfid_uid') {
+                const input = e.target;
+                const originalVal = input.value;
+                const upperVal = originalVal.toUpperCase();
+                
+                // Keep only hexadecimal characters (0-9, A-F)
+                const hexOnly = upperVal.replace(/[^0-9A-F]/g, '');
+                
+                // Format with a space every two characters
+                let formatted = '';
+                for (let i = 0; i < hexOnly.length; i += 2) {
+                    if (i > 0) {
+                        formatted += ' ';
+                    }
+                    formatted += hexOnly.substr(i, 2);
+                }
+                
+                if (originalVal !== formatted) {
+                    const selectionStart = input.selectionStart;
+                    const oldLen = originalVal.length;
+                    
+                    input.value = formatted;
+                    
+                    // Adjust cursor position based on changes
+                    const newLen = formatted.length;
+                    const cursorAdjustment = newLen - oldLen;
+                    let newCursorPos = selectionStart + cursorAdjustment;
+                    
+                    // Prevent cursor going below 0 or beyond text length
+                    newCursorPos = Math.max(0, Math.min(newLen, newCursorPos));
+                    input.setSelectionRange(newCursorPos, newCursorPos);
+                }
+            }
+        });
     </script>
     <style>
         main {
