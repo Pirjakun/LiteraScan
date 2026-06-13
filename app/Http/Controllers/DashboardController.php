@@ -20,6 +20,7 @@ class DashboardController extends Controller
             'total_books' => Book::count(),
             'available_books' => Book::where('status', 'available')->count(),
             'borrowed_books' => Book::where('status', 'borrowed')->count(),
+            'total_fines' => Transaction::sum('jumlah_denda'),
             'recent_transactions' => Transaction::with(['student', 'book'])->latest()->take(10)->get()->map(function($t) {
                 return [
                     'id' => $t->id,
@@ -31,6 +32,7 @@ class DashboardController extends Controller
                     'returned_at' => $t->returned_at ? $t->returned_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') : null,
                     'borrowed_human' => $t->borrowed_at ? $t->borrowed_at->diffForHumans() : null,
                     'returned_human' => $t->returned_at ? $t->returned_at->diffForHumans() : null,
+                    'jumlah_denda' => $t->jumlah_denda,
                 ];
             }),
             'active_session' => Cache::get('active_student_session'),

@@ -4,30 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'LITERA-SCAN - Perpustakaan Pintar')</title>
-    <!-- Google Fonts & Tailwind CDN -->
+    <!-- Fonts & Static Assets Compiled via Vite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Fredoka', 'Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        sky:   { soft: '#e0f2fe', mid: '#7dd3fc', deep: '#0ea5e9' },
-                        mint:  { soft: '#d1fae5', mid: '#6ee7b7', deep: '#10b981' },
-                        peach: { soft: '#ffedd5', mid: '#fdba74', deep: '#f97316' },
-                        grape: { soft: '#ede9fe', mid: '#c4b5fd', deep: '#8b5cf6' },
-                        rose:  { soft: '#ffe4e6', mid: '#fda4af', deep: '#f43f5e' },
-                    }
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -59,8 +40,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="font-display text-2xl font-700 font-bold tracking-tight text-slate-800 leading-none">Litera<span class="text-sky-deep">Scan</span></h1>
-                        <p class="text-[11px] text-slate-400 font-semibold tracking-wide mt-0.5">Perpustakaan Pintar Sekolah</p>
+                        <h1 class="font-display text-xl sm:text-2xl font-700 font-bold tracking-tight text-slate-800 leading-none">Litera<span class="text-sky-deep">Scan</span></h1>
+                        <p class="text-[9px] sm:text-[11px] text-slate-400 font-semibold tracking-wide mt-0.5">Perpustakaan Pintar Sekolah</p>
                     </div>
                 </a>
 
@@ -82,12 +63,12 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-mint-soft text-mint-deep text-xs font-bold">
+                <div class="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-mint-soft text-mint-deep text-xs font-bold">
                     <span class="relative flex h-2.5 w-2.5">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint-mid opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-mint-deep"></span>
                     </span>
-                    Sistem Online
+                    <span class="hidden sm:inline">Sistem Online</span>
                 </div>
             </div>
         </div>

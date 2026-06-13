@@ -87,6 +87,13 @@
                 <span id="metric-borrowed" class="text-3xl font-extrabold text-sky-deep">--</span>
                 <span class="text-xs font-semibold text-slate-400">Sedang Dipinjam</span>
             </div>
+            <div class="col-span-2 card rounded-2xl p-4 flex flex-col gap-1 border-l-4 border-l-rose-400 bg-rose-50/50">
+                <div class="h-9 w-9 rounded-xl bg-rose-soft text-rose-deep flex items-center justify-center mb-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <span id="metric-fines" class="text-3xl font-extrabold text-rose-deep">Rp --</span>
+                <span class="text-xs font-semibold text-slate-400">Total Denda Terkumpul</span>
+            </div>
         </div>
     </div>
 
@@ -112,11 +119,12 @@
                             <th class="p-4">Buku</th>
                             <th class="p-4">Kegiatan</th>
                             <th class="p-4">Waktu</th>
+                            <th class="p-4">Denda</th>
                         </tr>
                     </thead>
                     <tbody id="transaction-rows" class="divide-y divide-slate-100">
                         <tr>
-                            <td colspan="4" class="p-8 text-center text-slate-400">
+                            <td colspan="5" class="p-8 text-center text-slate-400">
                                 Memuat data...
                             </td>
                         </tr>
@@ -162,6 +170,7 @@
             document.getElementById('metric-books').innerText = data.total_books;
             document.getElementById('metric-available').innerText = data.available_books;
             document.getElementById('metric-borrowed').innerText = data.borrowed_books;
+            document.getElementById('metric-fines').innerText = 'Rp ' + data.total_fines.toLocaleString('id-ID');
 
             document.getElementById('tx-count').innerText = `${data.recent_transactions.length} Transaksi`;
 
@@ -169,7 +178,7 @@
             if (data.recent_transactions.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="4" class="p-10 text-center text-slate-400">
+                        <td colspan="5" class="p-10 text-center text-slate-400">
                             <div class="flex flex-col items-center gap-2">
                                 <div class="h-14 w-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-300">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -200,8 +209,11 @@
                                 </span>
                             </td>
                             <td class="p-4 text-xs text-slate-500 font-medium">
-                                <div class="font-bold text-slate-600">${tx.borrowed_human}</div>
-                                <div class="text-[10px] text-slate-400 mt-0.5">${tx.borrowed_at}</div>
+                                <div class="font-bold text-slate-600">${tx.borrowed_human || '-'}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">${tx.borrowed_at || '-'}</div>
+                            </td>
+                            <td class="p-4 text-xs font-bold ${tx.jumlah_denda > 0 ? 'text-rose-600 bg-rose-50/50 rounded-lg' : 'text-slate-400'}">
+                                ${tx.jumlah_denda > 0 ? 'Rp ' + tx.jumlah_denda.toLocaleString('id-ID') : '-'}
                             </td>
                         </tr>
                     `;

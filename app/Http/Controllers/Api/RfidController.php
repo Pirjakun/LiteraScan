@@ -91,10 +91,27 @@ class RfidController extends Controller
                     ->latest()
                     ->first();
 
+                $jumlahDenda = 0;
+                $now = now();
+
                 if ($transaction) {
+                    $borrowedAt = $transaction->borrowed_at;
+                    // Hitung total hari keterlambatan (termasuk hari libur)
+                    $totalDays = $borrowedAt->diffInDays($now);
+                    
+                    if ($totalDays > 7) {
+                        // Total hari kerja antara tanggal pinjam dan tanggal kembali
+                        $weekdays = $borrowedAt->diffInWeekdays($now);
+                        $hariTelat = $weekdays - 5; // dikurang 5 hari kerja gratis
+                        if ($hariTelat > 0) {
+                            $jumlahDenda = $hariTelat * 500;
+                        }
+                    }
+
                     $transaction->update([
-                        'returned_at' => now(),
+                        'returned_at' => $now,
                         'type' => 'return',
+                        'jumlah_denda' => $jumlahDenda,
                     ]);
                 }
 
@@ -102,6 +119,15 @@ class RfidController extends Controller
                 
                 // Transaksi selesai -> Hapus cache sesi
                 Cache::forget('active_student_session');
+
+                if ($jumlahDenda > 0) {
+                    return response()->json([
+                        'status' => 'success',
+                        'line1' => 'DIKEMBALIKAN',
+                        'line2' => 'Terlambat',
+                        'line3' => 'Denda: Rp ' . $jumlahDenda
+                    ]);
+                }
 
                 return response()->json([
                     'status' => 'success',

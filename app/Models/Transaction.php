@@ -12,6 +12,7 @@ class Transaction extends Model
         'type',
         'borrowed_at',
         'returned_at',
+        'jumlah_denda',
     ];
 
     protected $casts = [
