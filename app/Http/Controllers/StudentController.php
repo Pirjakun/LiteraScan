@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StudentController extends Controller
 {
@@ -38,6 +39,7 @@ class StudentController extends Controller
         ]);
 
         Student::create($validated);
+        Cache::forget('dashboard_metrics');
 
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
@@ -63,6 +65,7 @@ class StudentController extends Controller
         ]);
 
         $student->update($validated);
+        Cache::forget('dashboard_metrics');
 
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
@@ -73,6 +76,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
+        Cache::forget('dashboard_metrics');
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil dihapus.');
     }
 }

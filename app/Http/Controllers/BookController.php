@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class BookController extends Controller
 {
@@ -38,6 +39,7 @@ class BookController extends Controller
         ]);
 
         Book::create($validated);
+        Cache::forget('dashboard_metrics');
 
         return redirect()->route('books.index')->with('success', 'Data buku berhasil ditambahkan.');
     }
@@ -63,6 +65,7 @@ class BookController extends Controller
         ]);
 
         $book->update($validated);
+        Cache::forget('dashboard_metrics');
 
         return redirect()->route('books.index')->with('success', 'Data buku berhasil diperbarui.');
     }
@@ -73,6 +76,7 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
+        Cache::forget('dashboard_metrics');
         return redirect()->route('books.index')->with('success', 'Data buku berhasil dihapus.');
     }
 }

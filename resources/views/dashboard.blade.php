@@ -283,7 +283,28 @@
         });
     }
 
-    setInterval(fetchDashboardData, 1000);
+    let pollingTimer = null;
+
+    function startPolling() {
+        clearInterval(pollingTimer);
+        pollingTimer = setInterval(fetchDashboardData, 3000);
+    }
+
+    function stopPolling() {
+        clearInterval(pollingTimer);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            fetchDashboardData();
+            startPolling();
+        } else {
+            stopPolling();
+        }
+    });
+
+    // Mulai polling pertama kali
     fetchDashboardData();
+    startPolling();
 </script>
 @endsection

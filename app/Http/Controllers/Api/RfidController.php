@@ -76,6 +76,9 @@ class RfidController extends Controller
 
                 $book->update(['status' => 'borrowed']);
                 
+                // Hapus cache dashboard agar data terupdate instan
+                Cache::forget('dashboard_metrics');
+                
                 // Transaksi selesai -> Hapus cache sesi
                 Cache::forget('active_student_session');
 
@@ -116,6 +119,9 @@ class RfidController extends Controller
                 }
 
                 $book->update(['status' => 'available']);
+                
+                // Hapus cache dashboard agar data terupdate instan
+                Cache::forget('dashboard_metrics');
                 
                 // Transaksi selesai -> Hapus cache sesi
                 Cache::forget('active_student_session');
