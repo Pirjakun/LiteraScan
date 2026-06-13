@@ -355,12 +355,89 @@
                 window.location.href = url; // Fallback jika gagal
             });
         }
+
+        // Global delete form confirmation interception
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            if (form.classList.contains('delete-form') && !form.dataset.confirmed) {
+                e.preventDefault(); // Stop submission
+                
+                const modal = document.getElementById('delete-modal');
+                const modalContent = modal.querySelector('.transform');
+                const confirmBtn = document.getElementById('delete-modal-confirm');
+                const cancelBtn = document.getElementById('delete-modal-cancel');
+                
+                const titleElement = document.getElementById('delete-modal-title');
+                const msgElement = document.getElementById('delete-modal-message');
+                
+                // Customize message based on route
+                const action = form.getAttribute('action') || '';
+                if (action.includes('students')) {
+                    titleElement.textContent = 'Hapus Siswa?';
+                    msgElement.textContent = 'Menghapus data siswa juga akan menghapus data kartu RFID yang dikaitkan dengan siswa tersebut.';
+                } else if (action.includes('books')) {
+                    titleElement.textContent = 'Hapus Buku?';
+                    msgElement.textContent = 'Menghapus buku dari koleksi akan menghilangkan riwayat transaksi buku tersebut.';
+                } else if (action.includes('transactions')) {
+                    titleElement.textContent = 'Hapus Transaksi?';
+                    msgElement.textContent = 'Menghapus riwayat transaksi ini dapat mempengaruhi status ketersediaan buku terkait.';
+                } else {
+                    titleElement.textContent = 'Hapus Data?';
+                    msgElement.textContent = 'Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.';
+                }
+                
+                // Show modal with animations
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+                
+                // Handle Confirm
+                confirmBtn.onclick = function () {
+                    form.dataset.confirmed = 'true';
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                    form.submit();
+                };
+                
+                // Handle Cancel
+                cancelBtn.onclick = function () {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                };
+            }
+        });
     </script>
     <style>
         main {
             transition: opacity 0.15s ease-in-out;
         }
     </style>
+
+    <!-- Custom Delete Confirmation Modal -->
+    <div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 transform scale-95 transition-all duration-300 flex flex-col items-center text-center gap-4">
+            <!-- Warning Icon -->
+            <div class="h-14 w-14 rounded-full bg-rose-soft text-rose-deep flex items-center justify-center">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+            </div>
+            <div>
+                <h3 class="font-display text-lg font-extrabold text-slate-800" id="delete-modal-title">Hapus Data?</h3>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed" id="delete-modal-message">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+            </div>
+            <div class="flex items-center gap-3 w-full mt-2">
+                <button type="button" id="delete-modal-cancel" class="flex-1 px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-500 transition-all">
+                    Batal
+                </button>
+                <button type="button" id="delete-modal-confirm" class="flex-1 px-4 py-2.5 rounded-full bg-rose-deep hover:opacity-90 text-white text-xs font-bold transition-all shadow-lg shadow-rose-mid/30">
+                    Hapus
+                </button>
+            </div>
+        </div>
+    </div>
 
     @yield('scripts')
 </body>

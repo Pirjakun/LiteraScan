@@ -113,7 +113,7 @@
                                         </button>
                                     </form>
                                 @endif
-                                <form action="{{ route('transactions.destroy', $tx) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus catatan sirkulasi ini?');" class="inline">
+                                <form action="{{ route('transactions.destroy', $tx) }}" method="POST" class="delete-form inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="px-3 py-2 bg-rose-soft hover:bg-rose-mid/40 text-rose-deep rounded-xl transition-all text-xs font-bold flex items-center gap-1">
