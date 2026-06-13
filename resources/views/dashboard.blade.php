@@ -140,16 +140,16 @@
 @section('scripts')
 <script>
     let lastActiveSession = null;
-    let countdownTimer = null;
+    window.countdownTimer = null;
     let secondsLeft = 0;
 
     function startCountdown(duration) {
-        clearInterval(countdownTimer);
+        clearInterval(window.countdownTimer);
         secondsLeft = duration;
         updateCountdownUI();
-        countdownTimer = setInterval(() => {
+        window.countdownTimer = setInterval(() => {
             secondsLeft--;
-            if (secondsLeft <= 0) { clearInterval(countdownTimer); secondsLeft = 0; }
+            if (secondsLeft <= 0) { clearInterval(window.countdownTimer); secondsLeft = 0; }
             updateCountdownUI();
         }, 1000);
     }
@@ -275,7 +275,7 @@
                     </div>
                 `;
 
-                clearInterval(countdownTimer);
+                clearInterval(window.countdownTimer);
                 document.getElementById('session-timer').innerText = "00:00";
             }
 
@@ -283,15 +283,15 @@
         });
     }
 
-    let pollingTimer = null;
+    window.pollingTimer = null;
 
     function startPolling() {
-        clearInterval(pollingTimer);
-        pollingTimer = setInterval(fetchDashboardData, 3000);
+        clearInterval(window.pollingTimer);
+        window.pollingTimer = setInterval(fetchDashboardData, 3000);
     }
 
     function stopPolling() {
-        clearInterval(pollingTimer);
+        clearInterval(window.pollingTimer);
     }
 
     document.addEventListener('visibilitychange', () => {

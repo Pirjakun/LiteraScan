@@ -7,7 +7,11 @@
     <!-- Fonts & Static Assets Compiled via Vite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    </noscript>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
@@ -120,6 +124,140 @@
             </div>
         </div>
     </footer>
+
+    <!-- SPA Router with Skeleton Loader -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intercept all local anchor clicks
+            document.body.addEventListener('click', e => {
+                const link = e.target.closest('a');
+                if (!link) return;
+                
+                // Keep default browser action for modifier keys
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                
+                try {
+                    const url = new URL(link.href, window.location.href);
+                    if (url.origin !== window.location.origin) return; // External link
+                    
+                    // Exclude anchor-only links, form actions, target opens or downloads
+                    if (link.getAttribute('target') || link.getAttribute('download') || link.href.includes('#')) return;
+                    
+                    // Exclude specific api routes or files
+                    if (url.pathname.startsWith('/api') || url.pathname.endsWith('.php')) return;
+                    
+                    e.preventDefault();
+                    navigateTo(url.pathname + url.search);
+                } catch(err) {
+                    // Fallback to default browser navigation if error parsing URL
+                }
+            });
+
+            // Handle back/forward history navigation
+            window.addEventListener('popstate', () => {
+                navigateTo(window.location.pathname + window.location.search, false);
+            });
+        });
+
+        function navigateTo(url, push = true) {
+            const main = document.querySelector('main');
+            
+            // Clean up dashboard polling to prevent multiple intervals running
+            if (window.pollingTimer) {
+                clearInterval(window.pollingTimer);
+            }
+            if (window.countdownTimer) {
+                clearInterval(window.countdownTimer);
+            }
+
+            // Tampilkan skeleton loader dengan transisi halus
+            main.style.opacity = '0.4';
+            setTimeout(() => {
+                main.innerHTML = `
+                    <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
+                        <!-- Header skeleton -->
+                        <div class="flex flex-col gap-2">
+                            <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
+                            <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
+                        </div>
+                        
+                        <!-- Cards Grid skeleton -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
+                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
+                            <div class="h-40 bg-slate-200 rounded-3xl"></div>
+                        </div>
+                        
+                        <!-- Table skeleton -->
+                        <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-4 shadow-sm">
+                            <div class="h-6 bg-slate-200 rounded-xl w-32"></div>
+                            <div class="space-y-4 mt-2">
+                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                main.style.opacity = '1';
+            }, 100);
+
+            // Fetch halaman baru
+            fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Update Title
+                document.title = doc.title;
+                
+                // Update Main Content
+                const newMain = doc.querySelector('main');
+                if (newMain) {
+                    main.style.opacity = '0';
+                    setTimeout(() => {
+                        main.innerHTML = newMain.innerHTML;
+                        main.style.opacity = '1';
+                    }, 50);
+                }
+
+                // Update Navbar Active States
+                const newHeader = doc.querySelector('header');
+                if (newHeader) {
+                    document.querySelector('header').innerHTML = newHeader.innerHTML;
+                }
+                
+                // Jalankan script yang ada di halaman yang baru dimuat
+                const scripts = doc.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    document.body.appendChild(newScript);
+                    newScript.parentNode.removeChild(newScript);
+                });
+
+                if (push) {
+                    history.pushState(null, '', url);
+                }
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch(err => {
+                console.error('SPA Navigation error, falling back:', err);
+                window.location.href = url; // Fallback jika gagal
+            });
+        }
+    </script>
+    <style>
+        main {
+            transition: opacity 0.15s ease-in-out;
+        }
+    </style>
 
     @yield('scripts')
 </body>
