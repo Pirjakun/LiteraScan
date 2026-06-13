@@ -4,17 +4,17 @@
 
 @section('content')
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
-    <div class="flex flex-wrap gap-3 justify-between items-center">
+    <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
         <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-grape-soft text-grape-deep flex items-center justify-center">
+            <div class="h-12 w-12 rounded-2xl bg-grape-soft text-grape-deep flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1-7.87"></path></svg>
             </div>
             <div>
                 <h2 class="font-display text-xl font-bold text-slate-800">Data Siswa</h2>
-                <p class="text-xs text-slate-400">Kelola data anggota perpustakaan beserta kartu RFID-nya</p>
+                <p class="text-xs text-slate-400 mt-0.5">Kelola data anggota perpustakaan beserta kartu RFID-nya</p>
             </div>
         </div>
-        <a href="{{ route('students.create') }}" class="px-5 py-2.5 bg-gradient-to-r from-grape-deep to-sky-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/40 flex items-center gap-2">
+        <a href="{{ route('students.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-grape-deep to-sky-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/40 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
             Tambah Siswa
         </a>

@@ -162,35 +162,41 @@
         function getSkeletonForUrl(urlPath) {
             const path = urlPath.split('?')[0]; // Hapus query string
 
-            // 1. Skeleton untuk Formulir (Tambah/Edit)
+            // 1. Skeleton untuk Formulir (Tambah/Edit) - max-w-2xl centered
             if (path.endsWith('/create') || path.includes('/edit') || /\/(students|books)\/[^\/]+\/(edit|create)/.test(path)) {
                 return `
-                    <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
-                        <!-- Header Form -->
-                        <div class="flex flex-col gap-2">
-                            <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
-                            <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
-                        </div>
+                    <div class="animate-pulse flex flex-col gap-4 max-w-2xl mx-auto py-2">
+                        <!-- Back button placeholder -->
+                        <div class="h-4 bg-slate-200 rounded-lg w-32 mb-2"></div>
                         
                         <!-- Form Card -->
-                        <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-6 shadow-sm max-w-2xl">
+                        <div class="bg-white rounded-3xl p-8 border border-slate-100 flex flex-col gap-6 shadow-sm">
+                            <!-- Header Form -->
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="h-12 w-12 rounded-2xl bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-6 bg-slate-200 rounded-xl w-48"></div>
+                                    <div class="h-4 bg-slate-200 rounded-lg w-72"></div>
+                                </div>
+                            </div>
+                            
                             <div class="space-y-5">
                                 <div class="space-y-2">
                                     <div class="h-4 bg-slate-200 rounded-lg w-20"></div>
-                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                    <div class="h-11 bg-slate-50 rounded-2xl w-full"></div>
                                 </div>
                                 <div class="space-y-2">
                                     <div class="h-4 bg-slate-200 rounded-lg w-24"></div>
-                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                    <div class="h-11 bg-slate-50 rounded-2xl w-full"></div>
                                 </div>
                                 <div class="space-y-2">
                                     <div class="h-4 bg-slate-200 rounded-lg w-16"></div>
-                                    <div class="h-10 bg-slate-100 rounded-xl w-full"></div>
+                                    <div class="h-11 bg-slate-50 rounded-2xl w-full"></div>
                                 </div>
                             </div>
-                            <div class="flex gap-3 pt-4 border-t border-slate-100">
-                                <div class="h-10 bg-slate-200 rounded-xl w-24"></div>
-                                <div class="h-10 bg-sky-200 rounded-xl w-32"></div>
+                            <div class="flex justify-end gap-3 pt-5 border-t border-slate-100 mt-2">
+                                <div class="h-10 bg-slate-100 rounded-full w-20"></div>
+                                <div class="h-10 bg-slate-200 rounded-full w-28"></div>
                             </div>
                         </div>
                     </div>
@@ -245,30 +251,31 @@
                 `;
             }
             
-            // 3. Skeleton Default untuk Tabel List (Siswa & Buku)
+            // 3. Skeleton Default untuk Tabel List (Siswa & Buku) - Header inside card
             return `
-                <div class="animate-pulse flex flex-col gap-6 max-w-7xl mx-auto py-2">
-                    <!-- Title Header -->
-                    <div class="flex flex-col gap-2">
-                        <div class="h-8 bg-slate-200 rounded-2xl w-48 sm:w-64"></div>
-                        <div class="h-4 bg-slate-200 rounded-xl w-72 sm:w-96"></div>
-                    </div>
-                    
+                <div class="animate-pulse max-w-7xl mx-auto py-2">
                     <!-- Table Card -->
-                    <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-4 shadow-sm">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="space-y-2">
-                                <div class="h-6 bg-slate-200 rounded-xl w-40"></div>
-                                <div class="h-4 bg-slate-200 rounded-lg w-56"></div>
+                    <div class="bg-white rounded-3xl p-6 border border-slate-100 flex flex-col gap-6 shadow-sm">
+                        <!-- Header inside the card -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center pb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="h-12 w-12 rounded-2xl bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-6 bg-slate-200 rounded-xl w-36"></div>
+                                    <div class="h-4 bg-slate-200 rounded-lg w-64"></div>
+                                </div>
                             </div>
-                            <div class="h-10 bg-slate-200 rounded-xl w-36"></div>
+                            <div class="h-10 bg-slate-200 rounded-full w-full sm:w-36"></div>
                         </div>
                         
-                        <div class="space-y-4">
-                            <div class="h-8 bg-slate-50 rounded-lg w-full"></div>
-                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
-                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
-                            <div class="h-12 bg-slate-100 rounded-xl w-full"></div>
+                        <!-- Table structure -->
+                        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                            <div class="h-10 bg-slate-50 w-full mb-1"></div>
+                            <div class="space-y-3 p-2">
+                                <div class="h-12 bg-slate-100/60 rounded-xl w-full"></div>
+                                <div class="h-12 bg-slate-100/60 rounded-xl w-full"></div>
+                                <div class="h-12 bg-slate-100/60 rounded-xl w-full"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
