@@ -27,24 +27,71 @@
         <form action="{{ route('transactions.store') }}" method="POST" class="flex flex-col gap-5 relative">
             @csrf
 
-            <div class="flex flex-col gap-2">
-                <label for="student_id" class="text-xs font-bold text-slate-600">Pilih Siswa / Anggota</label>
-                <select name="student_id" id="student_id" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all">
-                    <option value="" disabled selected>-- Pilih Siswa --</option>
+            @php
+                $selectedStudentText = '';
+                if (old('student_id')) {
+                    $st = \App\Models\Student::find(old('student_id'));
+                    if ($st) {
+                        $selectedStudentText = $st->name . ' (NIS: ' . $st->nim . ')';
+                    }
+                }
+                
+                $selectedBookText = '';
+                if (old('book_id')) {
+                    $bk = \App\Models\Book::find(old('book_id'));
+                    if ($bk) {
+                        $selectedBookText = $bk->title;
+                    }
+                }
+            @endphp
+
+            <div class="flex flex-col gap-2 relative" id="student-search-container">
+                <label class="text-xs font-bold text-slate-600">Pilih Siswa / Anggota</label>
+                <input type="hidden" name="student_id" id="student_id" value="{{ old('student_id') }}" required>
+                <div class="relative">
+                    <input type="text" id="student_search_input" value="{{ $selectedStudentText }}" placeholder="Cari nama atau NIS siswa..." autocomplete="off" required
+                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all pr-10">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+                <!-- Dropdown list -->
+                <div id="student_dropdown_list" class="absolute top-[100%] left-0 right-0 z-30 mt-1 max-h-60 overflow-y-auto bg-white rounded-2xl border border-slate-100 shadow-xl hidden py-1">
                     @foreach($students as $st)
-                        <option value="{{ $st->id }}" {{ old('student_id') == $st->id ? 'selected' : '' }}>{{ $st->name }} (NIS: {{ $st->nim }})</option>
+                        <div class="student-option px-4 py-2.5 hover:bg-rose-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
+                             data-id="{{ $st->id }}" 
+                             data-search-text="{{ strtolower($st->name) }} {{ strtolower($st->nim) }}">
+                            <span class="font-bold text-slate-800">{{ $st->name }}</span>
+                            <span class="text-xs text-slate-400 font-mono">NIS: {{ $st->nim }}</span>
+                        </div>
                     @endforeach
-                </select>
+                    <div id="student_no_results" class="px-4 py-3 text-slate-400 text-sm italic hidden">Siswa tidak ditemukan</div>
+                </div>
             </div>
 
-            <div class="flex flex-col gap-2">
-                <label for="book_id" class="text-xs font-bold text-slate-600">Pilih Buku (Hanya yang berstatus Tersedia)</label>
-                <select name="book_id" id="book_id" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all">
-                    <option value="" disabled selected>-- Pilih Buku --</option>
+            <div class="flex flex-col gap-2 relative" id="book-search-container">
+                <label class="text-xs font-bold text-slate-600">Pilih Buku (Hanya yang berstatus Tersedia)</label>
+                <input type="hidden" name="book_id" id="book_id" value="{{ old('book_id') }}" required>
+                <div class="relative">
+                    <input type="text" id="book_search_input" value="{{ $selectedBookText }}" placeholder="Cari judul buku atau RFID..." autocomplete="off" required
+                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all pr-10"
+                           @if($books->isEmpty()) disabled @endif>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+                <!-- Dropdown list -->
+                <div id="book_dropdown_list" class="absolute top-[100%] left-0 right-0 z-30 mt-1 max-h-60 overflow-y-auto bg-white rounded-2xl border border-slate-100 shadow-xl hidden py-1">
                     @foreach($books as $bk)
-                        <option value="{{ $bk->id }}" {{ old('book_id') == $bk->id ? 'selected' : '' }}>{{ $bk->title }} (RFID: {{ $bk->rfid_uid }})</option>
+                        <div class="book-option px-4 py-2.5 hover:bg-rose-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
+                             data-id="{{ $bk->id }}" 
+                             data-search-text="{{ strtolower($bk->title) }} {{ strtolower($bk->rfid_uid) }}">
+                            <span class="font-bold text-slate-800">{{ $bk->title }}</span>
+                            <span class="text-xs text-slate-400 font-mono">RFID: {{ $bk->rfid_uid }}</span>
+                        </div>
                     @endforeach
-                </select>
+                    <div id="book_no_results" class="px-4 py-3 text-slate-400 text-sm italic hidden">Buku tidak ditemukan</div>
+                </div>
                 @if($books->isEmpty())
                     <span class="text-xs text-rose-deep font-semibold mt-1">Saat ini tidak ada buku yang berstatus tersedia untuk dipinjam.</span>
                 @endif
@@ -61,4 +108,119 @@
         </form>
     </div>
 </div>
+
+<script>
+    (function() {
+        // --- SISWA SEARCH ---
+        const studentHiddenInput = document.getElementById('student_id');
+        const studentSearchInput = document.getElementById('student_search_input');
+        const studentDropdown = document.getElementById('student_dropdown_list');
+        const studentOptions = document.querySelectorAll('.student-option');
+        const studentNoResults = document.getElementById('student_no_results');
+
+        studentSearchInput.addEventListener('focus', () => {
+            studentDropdown.classList.remove('hidden');
+        });
+
+        studentSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let hasResults = false;
+
+            studentOptions.forEach(opt => {
+                const searchText = opt.getAttribute('data-search-text');
+                if (searchText.includes(query)) {
+                    opt.classList.remove('hidden');
+                    hasResults = true;
+                } else {
+                    opt.classList.add('hidden');
+                }
+            });
+
+            if (hasResults) {
+                studentNoResults.classList.add('hidden');
+            } else {
+                studentNoResults.classList.remove('hidden');
+            }
+            
+            studentHiddenInput.value = '';
+        });
+
+        studentOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const id = opt.getAttribute('data-id');
+                const name = opt.querySelector('span:first-child').textContent;
+                const nis = opt.querySelector('.font-mono').textContent;
+                
+                studentHiddenInput.value = id;
+                studentSearchInput.value = `${name} (${nis})`;
+                studentDropdown.classList.add('hidden');
+            });
+        });
+
+        // --- BUKU SEARCH ---
+        const bookHiddenInput = document.getElementById('book_id');
+        const bookSearchInput = document.getElementById('book_search_input');
+        const bookDropdown = document.getElementById('book_dropdown_list');
+        const bookOptions = document.querySelectorAll('.book-option');
+        const bookNoResults = document.getElementById('book_no_results');
+
+        if (bookSearchInput) {
+            bookSearchInput.addEventListener('focus', () => {
+                bookDropdown.classList.remove('hidden');
+            });
+
+            bookSearchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let hasResults = false;
+
+                bookOptions.forEach(opt => {
+                    const searchText = opt.getAttribute('data-search-text');
+                    if (searchText.includes(query)) {
+                        opt.classList.remove('hidden');
+                        hasResults = true;
+                    } else {
+                        opt.classList.add('hidden');
+                    }
+                });
+
+                if (hasResults) {
+                    bookNoResults.classList.add('hidden');
+                } else {
+                    bookNoResults.classList.remove('hidden');
+                }
+
+                bookHiddenInput.value = '';
+            });
+
+            bookOptions.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const id = opt.getAttribute('data-id');
+                    const title = opt.querySelector('span:first-child').textContent;
+                    
+                    bookHiddenInput.value = id;
+                    bookSearchInput.value = title;
+                    bookDropdown.classList.add('hidden');
+                });
+            });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            const studentContainer = document.getElementById('student-search-container');
+            if (studentContainer && !studentContainer.contains(e.target)) {
+                studentDropdown.classList.add('hidden');
+                if (!studentHiddenInput.value) {
+                    studentSearchInput.value = '';
+                }
+            }
+            const bookContainer = document.getElementById('book-search-container');
+            if (bookContainer && !bookContainer.contains(e.target)) {
+                bookDropdown.classList.add('hidden');
+                if (!bookHiddenInput.value) {
+                    bookSearchInput.value = '';
+                }
+            }
+        });
+    })();
+</script>
 @endsection

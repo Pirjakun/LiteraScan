@@ -44,7 +44,7 @@
                        class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-peach-mid focus:bg-white transition-all">
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="grid grid-cols-1 @if($book->exists) md:grid-cols-2 @endif gap-5">
                 <div class="flex flex-col gap-2">
                     <label for="rfid_uid" class="text-xs font-bold text-slate-600">RFID UID Buku</label>
                     <input type="text" name="rfid_uid" id="rfid_uid" value="{{ old('rfid_uid', $book->rfid_uid) }}" required placeholder="Contoh: 04 E5 D7 08 C1 2A 81"
@@ -52,14 +52,16 @@
                     <span class="text-[11px] text-slate-400">Tempelkan tag buku di alat pemindai untuk mendapat nomor ini.</span>
                 </div>
 
-                <div class="flex flex-col gap-2">
-                    <label for="status" class="text-xs font-bold text-slate-600">Status Awal</label>
-                    <select name="status" id="status" required
-                            class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-peach-mid focus:bg-white transition-all">
-                        <option value="available" {{ old('status', $book->status) == 'available' ? 'selected' : '' }}>Tersedia</option>
-                        <option value="borrowed" {{ old('status', $book->status) == 'borrowed' ? 'selected' : '' }}>Dipinjam</option>
-                    </select>
-                </div>
+                @if($book->exists)
+                    <div class="flex flex-col gap-2">
+                        <label for="status" class="text-xs font-bold text-slate-600">Status Buku</label>
+                        <select name="status" id="status" required
+                                class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-peach-mid focus:bg-white transition-all">
+                            <option value="available" {{ old('status', $book->status) == 'available' ? 'selected' : '' }}>Tersedia</option>
+                            <option value="borrowed" {{ old('status', $book->status) == 'borrowed' ? 'selected' : '' }}>Dipinjam</option>
+                        </select>
+                    </div>
+                @endif
             </div>
 
             <div class="flex items-center justify-end gap-3 mt-3 pt-5 border-t border-slate-100">

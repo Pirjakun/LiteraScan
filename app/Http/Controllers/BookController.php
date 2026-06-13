@@ -35,8 +35,9 @@ class BookController extends Controller
             'rfid_uid' => 'required|string|max:50|unique:books,rfid_uid',
             'title' => 'required|string|max:150',
             'author' => 'required|string|max:100',
-            'status' => 'required|string|in:available,borrowed',
         ]);
+
+        $validated['status'] = 'available';
 
         Book::create($validated);
         Cache::forget('dashboard_metrics');
