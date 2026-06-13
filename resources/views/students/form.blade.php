@@ -40,8 +40,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="flex flex-col gap-2">
-                    <label for="nim" class="text-xs font-bold text-slate-600">NIM (Nomor Induk)</label>
-                    <input type="text" name="nim" id="nim" value="{{ old('nim', $student->nim) }}" required placeholder="Contoh: 103032330001"
+                    <label for="nim" class="text-xs font-bold text-slate-600">NIS (Nomor Induk Siswa)</label>
+                    <input type="text" name="nim" id="nim" value="{{ old('nim', $student->nim) }}" required placeholder="Contoh: 10303"
                            class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm font-mono focus:outline-none focus:border-grape-mid focus:bg-white transition-all">
                 </div>
 

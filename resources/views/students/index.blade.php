@@ -26,7 +26,7 @@
             <thead>
                 <tr class="text-xs uppercase font-bold text-slate-400 bg-slate-50">
                     <th class="p-4">Nama</th>
-                    <th class="p-4">NIM</th>
+                    <th class="p-4">NIS</th>
                     <th class="p-4">RFID UID</th>
                     <th class="p-4">Jurusan</th>
                     <th class="p-4 text-center">Aksi</th>

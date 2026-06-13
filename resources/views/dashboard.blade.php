@@ -242,7 +242,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-2 bg-slate-50 rounded-2xl p-3 text-xs">
                             <div>
-                                <div class="text-slate-400 font-bold uppercase text-[9px]">NIM</div>
+                                <div class="text-slate-400 font-bold uppercase text-[9px]">NIS</div>
                                 <div class="font-mono text-slate-700 font-bold mt-0.5">${data.active_session.nim}</div>
                             </div>
                             <div>

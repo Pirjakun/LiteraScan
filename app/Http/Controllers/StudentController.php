@@ -36,6 +36,11 @@ class StudentController extends Controller
             'nim' => 'required|string|max:20|unique:students,nim',
             'name' => 'required|string|max:100',
             'major' => 'required|string|max:100',
+        ], [], [
+            'nim' => 'NIS',
+            'rfid_uid' => 'RFID UID',
+            'name' => 'Nama',
+            'major' => 'Jurusan',
         ]);
 
         Student::create($validated);
@@ -62,6 +67,11 @@ class StudentController extends Controller
             'nim' => 'required|string|max:20|unique:students,nim,' . $student->id,
             'name' => 'required|string|max:100',
             'major' => 'required|string|max:100',
+        ], [], [
+            'nim' => 'NIS',
+            'rfid_uid' => 'RFID UID',
+            'name' => 'Nama',
+            'major' => 'Jurusan',
         ]);
 
         $student->update($validated);
