@@ -54,8 +54,8 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <label for="major" class="text-xs font-bold text-slate-600">Jurusan / Program Studi</label>
-                <input type="text" name="major" id="major" value="{{ old('major', $student->major) }}" required placeholder="Contoh: Kelas 5A"
+                <label for="major" class="text-xs font-bold text-slate-600">Kelas</label>
+                <input type="text" name="major" id="major" value="{{ old('major', $student->major) }}" required placeholder="Contoh: 3A"
                        class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-grape-mid focus:bg-white transition-all">
             </div>
 

@@ -40,7 +40,7 @@ class StudentController extends Controller
             'nim' => 'NIS',
             'rfid_uid' => 'RFID UID',
             'name' => 'Nama',
-            'major' => 'Jurusan',
+            'major' => 'Kelas',
         ]);
 
         Student::create($validated);
@@ -71,7 +71,7 @@ class StudentController extends Controller
             'nim' => 'NIS',
             'rfid_uid' => 'RFID UID',
             'name' => 'Nama',
-            'major' => 'Jurusan',
+            'major' => 'Kelas',
         ]);
 
         $student->update($validated);

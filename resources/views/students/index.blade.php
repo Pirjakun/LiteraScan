@@ -28,7 +28,7 @@
                     <th class="p-4">Nama</th>
                     <th class="p-4">NIS</th>
                     <th class="p-4">RFID UID</th>
-                    <th class="p-4">Jurusan</th>
+                    <th class="p-4">Kelas</th>
                     <th class="p-4 text-center">Aksi</th>
                 </tr>
             </thead>

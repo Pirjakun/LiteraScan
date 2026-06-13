@@ -246,7 +246,7 @@
                                 <div class="font-mono text-slate-700 font-bold mt-0.5">${data.active_session.nim}</div>
                             </div>
                             <div>
-                                <div class="text-slate-400 font-bold uppercase text-[9px]">Jurusan</div>
+                                <div class="text-slate-400 font-bold uppercase text-[9px]">Kelas</div>
                                 <div class="text-slate-700 font-semibold mt-0.5">${data.active_session.major}</div>
                             </div>
                         </div>
