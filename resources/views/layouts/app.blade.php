@@ -71,16 +71,6 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <!-- Indikator status sistem -->
-                <div class="flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-mint-soft text-mint-deep text-xs font-bold">
-                    <span class="relative flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint-mid opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-mint-deep"></span>
-                    </span>
-                    <span class="hidden sm:inline">Sistem Online</span>
-                    <span class="sm:hidden">Online</span>
-                </div>
-
                 <!-- Tombol menu hamburger (hanya tampil di mobile) -->
                 <button type="button" data-mobile-toggle aria-label="Buka menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-2xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -139,13 +129,8 @@
 
     <!-- Footer -->
     <footer class="w-full bg-white/60 backdrop-blur-sm py-4 border-t border-slate-100 text-center text-xs text-slate-400">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-center">
             <span>&copy; {{ date('Y') }} LiteraScan &middot; Perpustakaan Pintar Sekolah Dasar</span>
-            <div class="flex items-center gap-2 font-semibold">
-                <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-mint-deep"></span>Database</span>
-                <span class="text-slate-300">&bull;</span>
-                <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-mint-deep"></span>Alat Pemindai RFID</span>
-            </div>
         </div>
     </footer>
 

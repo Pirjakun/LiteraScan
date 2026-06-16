@@ -14,9 +14,13 @@
 @section('content')
 
 <!-- Greeting -->
+@php
+    $jam = (int) \Carbon\Carbon::now('Asia/Jakarta')->format('H');
+    $sapaan = $jam < 11 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' : ($jam < 18 ? 'Selamat sore' : 'Selamat malam'));
+@endphp
 <div class="mb-6">
-    <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800">Selamat datang, Bu Pustakawati! 👋</h2>
-    <p class="text-sm text-slate-500 mt-1">Pantau peminjaman dan pengembalian buku secara langsung di sini.</p>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800">{{ $sapaan }}! 👋</h2>
+    <p class="text-sm text-slate-500 mt-1">Pantau peminjaman dan pengembalian buku Sang Cakap.</p>
 </div>
 
 <!-- Main Grid -->
