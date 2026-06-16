@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Transaksi Sirkulasi - PuSaKap')
+@section('title', 'Peminjaman & Pengembalian - PuSaKap')
 
 @section('content')
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
@@ -12,11 +12,11 @@
                 </svg>
             </div>
             <div>
-                <h2 class="font-display text-xl font-bold text-slate-800">Transaksi Sirkulasi</h2>
+                <h2 class="font-display text-xl font-bold text-slate-800">Peminjaman & Pengembalian</h2>
                 <p class="text-xs text-slate-400 mt-0.5">Kelola data peminjaman, pengembalian, dan denda secara manual</p>
             </div>
         </div>
-        <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-grape-mid to-grape-deep hover:opacity-90 text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50 flex items-center gap-2">
+        <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-grape-mid hover:bg-grape-deep text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -135,7 +135,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                     </svg>
                                 </div>
-                                <span class="text-sm font-semibold">Belum ada data transaksi sirkulasi.</span>
+                                <span class="text-sm font-semibold">Belum ada data peminjaman &amp; pengembalian</span>
                             </div>
                         </td>
                     </tr>

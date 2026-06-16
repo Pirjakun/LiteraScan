@@ -101,7 +101,7 @@
                 <a href="{{ route('transactions.index') }}" class="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-sm font-bold text-slate-500 transition-all">
                     Batal
                 </a>
-                <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-grape-mid to-grape-deep hover:opacity-90 text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50">
+                <button type="submit" class="px-6 py-2.5 bg-grape-mid hover:bg-grape-deep text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50">
                     Simpan Peminjaman
                 </button>
             </div>
