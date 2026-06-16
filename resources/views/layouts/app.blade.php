@@ -14,7 +14,7 @@
     </noscript>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        html { scrollbar-gutter: stable; }
+        html { overflow-y: scroll; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background:

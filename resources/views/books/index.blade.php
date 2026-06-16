@@ -14,7 +14,7 @@
                 <p class="text-xs text-slate-400 mt-0.5">Kelola daftar buku perpustakaan beserta label RFID-nya</p>
             </div>
         </div>
-        <a href="{{ route('books.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-sky-deep to-grape-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-sky-mid/40 flex items-center gap-2">
+        <a href="{{ route('books.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-grape-mid to-grape-deep hover:opacity-90 text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
             Tambah Buku
         </a>
