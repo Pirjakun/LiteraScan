@@ -6,7 +6,7 @@
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
     <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
         <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-rose-soft text-rose-deep flex items-center justify-center shrink-0">
+            <div class="h-12 w-12 rounded-2xl bg-sky-soft text-sky-deep flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                 </svg>
@@ -16,7 +16,7 @@
                 <p class="text-xs text-slate-400 mt-0.5">Kelola data peminjaman, pengembalian, dan denda secara manual</p>
             </div>
         </div>
-        <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-rose-deep to-peach-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-rose-mid/40 flex items-center gap-2">
+        <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-sky-deep to-grape-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-sky-mid/40 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -26,7 +26,7 @@
 
     <!-- Filter Tabs -->
     <div class="flex flex-wrap gap-2 pb-2 border-b border-slate-100">
-        <a href="{{ route('transactions.index') }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ !$status ? 'bg-rose-soft text-rose-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
+        <a href="{{ route('transactions.index') }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ !$status ? 'bg-sky-soft text-sky-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
             Semua ({{ \App\Models\Transaction::count() }})
         </a>
         <a href="{{ route('transactions.index', ['status' => 'borrowed']) }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ $status === 'borrowed' ? 'bg-sky-soft text-sky-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
@@ -130,7 +130,7 @@
                     <tr>
                         <td colspan="7" class="p-10 text-center text-slate-400">
                             <div class="flex flex-col items-center gap-2">
-                                <div class="h-14 w-14 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
+                                <div class="h-14 w-14 rounded-full bg-sky-soft flex items-center justify-center text-sky-deep">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                     </svg>

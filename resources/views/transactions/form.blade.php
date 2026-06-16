@@ -10,10 +10,10 @@
     </a>
 
     <div class="card rounded-3xl p-8 relative overflow-hidden">
-        <div class="absolute -top-12 -right-10 w-36 h-36 bg-rose-soft rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -top-12 -right-10 w-36 h-36 bg-sky-soft rounded-full blur-2xl pointer-events-none"></div>
 
         <div class="mb-8 relative flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-rose-soft text-rose-deep flex items-center justify-center">
+            <div class="h-12 w-12 rounded-2xl bg-sky-soft text-sky-deep flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                 </svg>
@@ -50,7 +50,7 @@
                 <input type="hidden" name="student_id" id="student_id" value="{{ old('student_id') }}" required>
                 <div class="relative">
                     <input type="text" id="student_search_input" value="{{ $selectedStudentText }}" placeholder="Cari nama atau NIS siswa..." autocomplete="off" required
-                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all pr-10">
+                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-sky-mid focus:bg-white transition-all pr-10">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
@@ -58,7 +58,7 @@
                 <!-- Dropdown list -->
                 <div id="student_dropdown_list" class="absolute top-[100%] left-0 right-0 z-30 mt-1 max-h-60 overflow-y-auto bg-white rounded-2xl border border-slate-100 shadow-xl hidden py-1">
                     @foreach($students as $st)
-                        <div class="student-option px-4 py-2.5 hover:bg-rose-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
+                        <div class="student-option px-4 py-2.5 hover:bg-sky-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
                              data-id="{{ $st->id }}" 
                              data-search-text="{{ strtolower($st->name) }} {{ strtolower($st->nim) }}">
                             <span class="font-bold text-slate-800">{{ $st->name }}</span>
@@ -74,7 +74,7 @@
                 <input type="hidden" name="book_id" id="book_id" value="{{ old('book_id') }}" required>
                 <div class="relative">
                     <input type="text" id="book_search_input" value="{{ $selectedBookText }}" placeholder="Cari judul buku atau RFID..." autocomplete="off" required
-                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-rose-mid focus:bg-white transition-all pr-10"
+                           class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:border-sky-mid focus:bg-white transition-all pr-10"
                            @if($books->isEmpty()) disabled @endif>
                     <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 pointer-events-none">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -83,7 +83,7 @@
                 <!-- Dropdown list -->
                 <div id="book_dropdown_list" class="absolute top-[100%] left-0 right-0 z-30 mt-1 max-h-60 overflow-y-auto bg-white rounded-2xl border border-slate-100 shadow-xl hidden py-1">
                     @foreach($books as $bk)
-                        <div class="book-option px-4 py-2.5 hover:bg-rose-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
+                        <div class="book-option px-4 py-2.5 hover:bg-sky-soft/40 cursor-pointer text-sm text-slate-700 transition-all flex flex-col gap-0.5" 
                              data-id="{{ $bk->id }}" 
                              data-search-text="{{ strtolower($bk->title) }} {{ strtolower($bk->rfid_uid) }}">
                             <span class="font-bold text-slate-800">{{ $bk->title }}</span>
@@ -93,7 +93,7 @@
                     <div id="book_no_results" class="px-4 py-3 text-slate-400 text-sm italic hidden">Buku tidak ditemukan</div>
                 </div>
                 @if($books->isEmpty())
-                    <span class="text-xs text-rose-deep font-semibold mt-1">Saat ini tidak ada buku yang berstatus tersedia untuk dipinjam.</span>
+                    <span class="text-xs text-sky-deep font-semibold mt-1">Saat ini tidak ada buku yang berstatus tersedia untuk dipinjam.</span>
                 @endif
             </div>
 
@@ -101,7 +101,7 @@
                 <a href="{{ route('transactions.index') }}" class="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-sm font-bold text-slate-500 transition-all">
                     Batal
                 </a>
-                <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-rose-deep to-peach-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-rose-mid/40">
+                <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-sky-deep to-grape-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-sky-mid/40">
                     Simpan Peminjaman
                 </button>
             </div>

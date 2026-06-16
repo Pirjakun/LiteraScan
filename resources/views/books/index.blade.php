@@ -6,7 +6,7 @@
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
     <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
         <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-peach-soft text-peach-deep flex items-center justify-center shrink-0">
+            <div class="h-12 w-12 rounded-2xl bg-sky-soft text-sky-deep flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13"></path></svg>
             </div>
             <div>
@@ -14,7 +14,7 @@
                 <p class="text-xs text-slate-400 mt-0.5">Kelola daftar buku perpustakaan beserta label RFID-nya</p>
             </div>
         </div>
-        <a href="{{ route('books.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-peach-deep to-rose-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-peach-mid/40 flex items-center gap-2">
+        <a href="{{ route('books.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-sky-deep to-grape-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-sky-mid/40 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
             Tambah Buku
         </a>
@@ -74,7 +74,7 @@
                     <tr>
                         <td colspan="5" class="p-10 text-center text-slate-400">
                             <div class="flex flex-col items-center gap-2">
-                                <div class="h-14 w-14 rounded-full bg-peach-soft flex items-center justify-center text-peach-deep">
+                                <div class="h-14 w-14 rounded-full bg-sky-soft flex items-center justify-center text-sky-deep">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13"></path></svg>
                                 </div>
                                 <span class="text-sm font-semibold">Belum ada buku. Yuk tambahkan buku pertama!</span>
