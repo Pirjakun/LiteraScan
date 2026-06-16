@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Pinjam Manual - LiteraScan')
+@section('title', 'Tambah Pinjam Manual - PuSaKap')
 
 @section('content')
 <div class="max-w-2xl mx-auto">

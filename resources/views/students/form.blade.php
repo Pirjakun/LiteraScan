@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($student->exists ? 'Edit Siswa' : 'Tambah Siswa') . ' - LiteraScan')
+@section('title', ($student->exists ? 'Edit Siswa' : 'Tambah Siswa') . ' - PuSaKap')
 
 @section('content')
 <div class="max-w-2xl mx-auto">

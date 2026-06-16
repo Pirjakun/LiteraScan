@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'LITERA-SCAN - Perpustakaan Pintar')</title>
+    <title>@yield('title', 'PuSaKap - Perpustakaan Sang Cakap')</title>
     <!-- Fonts & Static Assets Compiled via Vite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,8 +44,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="font-display text-xl sm:text-2xl font-700 font-bold tracking-tight text-slate-800 leading-none">Litera<span class="text-sky-deep">Scan</span></h1>
-                        <p class="text-[9px] sm:text-[11px] text-slate-400 font-semibold tracking-wide mt-0.5">Perpustakaan Pintar Sekolah</p>
+                        <h1 class="font-display text-xl sm:text-2xl font-700 font-bold tracking-tight text-slate-800 leading-none">PuSa<span class="text-sky-deep">Kap</span></h1>
+                        <p class="text-[9px] sm:text-[11px] text-slate-400 font-semibold tracking-wide mt-0.5">Perpustakaan Sang Cakap</p>
                     </div>
                 </a>
 
@@ -130,7 +130,7 @@
     <!-- Footer -->
     <footer class="w-full bg-white/60 backdrop-blur-sm py-4 border-t border-slate-100 text-center text-xs text-slate-400">
         <div class="max-w-7xl mx-auto px-6 flex items-center justify-center">
-            <span>&copy; {{ date('Y') }} LiteraScan &middot; Perpustakaan Pintar Sekolah Dasar</span>
+            <span>&copy; {{ date('Y') }} PuSaKap &middot; Perpustakaan Sang Cakap</span>
         </div>
     </footer>
 
