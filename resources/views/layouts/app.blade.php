@@ -17,9 +17,9 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background:
-                radial-gradient(circle at 10% 0%, rgba(125, 211, 252, 0.18), transparent 35%),
-                radial-gradient(circle at 90% 5%, rgba(196, 181, 253, 0.18), transparent 35%),
-                radial-gradient(circle at 50% 100%, rgba(110, 231, 183, 0.15), transparent 40%),
+                radial-gradient(circle at 10% 0%, rgba(96, 165, 250, 0.20), transparent 35%),
+                radial-gradient(circle at 90% 5%, rgba(253, 224, 71, 0.22), transparent 35%),
+                radial-gradient(circle at 50% 100%, rgba(37, 99, 235, 0.12), transparent 40%),
                 #f7fafc;
         }
         .font-display { font-family: 'Fredoka', sans-serif; }

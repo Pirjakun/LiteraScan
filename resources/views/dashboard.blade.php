@@ -4,8 +4,8 @@
 
 @section('styles')
 <style>
-    .glow-active { box-shadow: 0 18px 40px -20px rgba(139, 92, 246, 0.55); border-color: #c4b5fd !important; }
-    .glow-idle   { box-shadow: 0 12px 30px -22px rgba(14, 165, 233, 0.4); }
+    .glow-active { box-shadow: 0 18px 40px -20px rgba(37, 99, 235, 0.55); border-color: #60a5fa !important; }
+    .glow-idle   { box-shadow: 0 12px 30px -22px rgba(37, 99, 235, 0.4); }
     @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
     .floaty { animation: floaty 3s ease-in-out infinite; }
 </style>

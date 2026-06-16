@@ -9,21 +9,24 @@
     --font-sans: 'Plus Jakarta Sans', sans-serif;
     --font-display: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
 
-    --color-sky-soft: #e0f2fe;
-    --color-sky-mid: #7dd3fc;
-    --color-sky-deep: #0ea5e9;
+    /* Biru royal — warna utama merek Sang Cakap */
+    --color-sky-soft: #dbeafe;
+    --color-sky-mid: #60a5fa;
+    --color-sky-deep: #2563eb;
 
     --color-mint-soft: #d1fae5;
     --color-mint-mid: #6ee7b7;
     --color-mint-deep: #10b981;
 
-    --color-peach-soft: #ffedd5;
-    --color-peach-mid: #fdba74;
-    --color-peach-deep: #f97316;
+    /* Biru indigo — aksen biru sekunder */
+    --color-peach-soft: #e0e7ff;
+    --color-peach-mid: #a5b4fc;
+    --color-peach-deep: #4f46e5;
 
-    --color-grape-soft: #ede9fe;
-    --color-grape-mid: #c4b5fd;
-    --color-grape-deep: #8b5cf6;
+    /* Kuning emas — warna kedua merek Sang Cakap */
+    --color-grape-soft: #fef9c3;
+    --color-grape-mid: #fde047;
+    --color-grape-deep: #ca8a04;
 
     --color-rose-soft: #ffe4e6;
     --color-rose-mid: #fda4af;
