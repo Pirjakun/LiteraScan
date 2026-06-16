@@ -19,7 +19,7 @@
     $sapaan = $jam < 11 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' : ($jam < 18 ? 'Selamat sore' : 'Selamat malam'));
 @endphp
 <div class="mb-6">
-    <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800">{{ $sapaan }}, selamat datang di <span class="text-sky-deep">Pu</span><span class="text-grape-deep">SaKap</span>! 👋</h2>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800">{{ $sapaan }}, selamat datang di <span class="text-sky-deep">Pu</span><span class="text-grape-mid">SaKap</span>! 👋</h2>
     <p class="text-sm text-slate-500 mt-1">Perpustakaan Sang Cakap untuk memantau peminjaman dan pengembalian buku</p>
 </div>
 

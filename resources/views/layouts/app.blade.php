@@ -123,7 +123,7 @@
     <!-- Footer -->
     <footer class="w-full bg-white/60 backdrop-blur-sm py-4 border-t border-slate-100 text-center text-xs text-slate-400">
         <div class="max-w-7xl mx-auto px-6 flex items-center justify-center">
-            <span>&copy; {{ date('Y') }} <span class="font-bold text-sky-deep">Pu</span><span class="font-bold text-grape-deep">SaKap</span> &middot; Perpustakaan Sang Cakap</span>
+            <span>&copy; {{ date('Y') }} <span class="font-bold text-sky-deep">Pu</span><span class="font-bold text-grape-mid">SaKap</span> &middot; Perpustakaan Sang Cakap</span>
         </div>
     </footer>
 
