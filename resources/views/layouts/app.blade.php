@@ -298,12 +298,16 @@
                 clearInterval(window.countdownTimer);
             }
 
-            // Tampilkan skeleton loader dengan transisi halus sesuai URL target
+            // Tampilkan skeleton loader hanya jika fetch belum selesai dalam 150ms.
+            // Timer disimpan agar bisa dibatalkan saat konten asli sudah datang,
+            // supaya skeleton tidak menimpa konten (race condition di server cepat).
+            let contentLoaded = false;
             main.style.opacity = '0.4';
-            setTimeout(() => {
+            const skeletonTimer = setTimeout(() => {
+                if (contentLoaded) return;
                 main.innerHTML = getSkeletonForUrl(url);
                 main.style.opacity = '1';
-            }, 100);
+            }, 150);
 
             // Fetch halaman baru
             fetch(url)
@@ -312,20 +316,21 @@
                 return response.text();
             })
             .then(html => {
+                // Konten sudah datang: batalkan skeleton agar tidak menimpa konten asli.
+                contentLoaded = true;
+                clearTimeout(skeletonTimer);
+
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
+
                 // Update Title
                 document.title = doc.title;
-                
+
                 // Update Main Content
                 const newMain = doc.querySelector('main');
                 if (newMain) {
-                    main.style.opacity = '0';
-                    setTimeout(() => {
-                        main.innerHTML = newMain.innerHTML;
-                        main.style.opacity = '1';
-                    }, 50);
+                    main.innerHTML = newMain.innerHTML;
+                    main.style.opacity = '1';
                 }
 
                 // Update Navbar Active States
@@ -351,6 +356,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             })
             .catch(err => {
+                clearTimeout(skeletonTimer);
                 console.error('SPA Navigation error, falling back:', err);
                 window.location.href = url; // Fallback jika gagal
             });
