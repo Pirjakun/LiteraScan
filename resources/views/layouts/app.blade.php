@@ -37,16 +37,8 @@
     <header class="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-5 sm:px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-8">
-                <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="h-11 w-11 rounded-2xl bg-gradient-to-tr from-sky-deep to-grape-deep flex items-center justify-center shadow-lg shadow-sky-mid/40">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="font-display text-xl sm:text-2xl font-700 font-bold tracking-tight text-slate-800 leading-none">PuSa<span class="text-sky-deep">Kap</span></h1>
-                        <p class="text-[9px] sm:text-[11px] text-slate-400 font-semibold tracking-wide mt-0.5">Perpustakaan Sang Cakap</p>
-                    </div>
+                <a href="{{ url('/') }}" class="flex items-center">
+                    <img src="{{ asset('images/sang-cakap-logo-cropped.png') }}" alt="PuSaKap - Perpustakaan Sang Cakap" class="h-10 sm:h-12 w-auto">
                 </a>
 
                 <!-- Navigation Links -->
