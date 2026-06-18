@@ -22,8 +22,11 @@ COPY --from=node-builder /app/public/build ./public/build
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R application:application /app/storage /app/bootstrap/cache
+# Set permissions (Chmod 777 is needed for random container UIDs on Hugging Face)
+RUN chmod -R 777 /app/storage /app/bootstrap/cache
+
+# Copy CA certificate to app directory for PHP-FPM readability and open_basedir compatibility
+RUN cp /etc/ssl/certs/ca-certificates.crt /app/ca-certificates.crt && chmod 777 /app/ca-certificates.crt
 
 # Change port to 7860 for Hugging Face Spaces compatibility
 RUN find /opt/docker/etc/nginx/ -type f -exec sed -i 's/listen 80/listen 7860/g' {} +
