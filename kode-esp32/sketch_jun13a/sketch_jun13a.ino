@@ -142,8 +142,6 @@ void kirimDataKeServer(String uid) {
   if (!isHttpInitialized) {
     if (String(serverUrl).startsWith("https")) {
       clientSecure.setInsecure(); // Abaikan verifikasi SSL agar mudah
-      // Batasi ukuran buffer TLS untuk stabilitas memori
-      clientSecure.setBufferSizes(2048, 1024);
       http.begin(clientSecure, serverUrl);
     } else {
       http.begin(clientPlain, serverUrl);
