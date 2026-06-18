@@ -263,11 +263,15 @@ class RfidController extends Controller
             $activeSession = Cache::get('active_student_session');
             if (!$activeSession && app()->environment() !== 'local' && $firebaseUrl) {
                 try {
-                    $activeSession = Http::timeout(1.0)->get($firebaseUrl . '/active_session.json')->json();
+                    $fetched = Http::timeout(1.0)->get($firebaseUrl . '/active_session.json')->json();
+                    // Pastikan data dari Firebase adalah array yang valid sebelum dipakai
+                    if (is_array($fetched) && isset($fetched['id'])) {
+                        $activeSession = $fetched;
+                    }
                 } catch (\Exception $e) {}
             }
 
-            if ($activeSession && $activeSession['id'] === $student->id) {
+            if ($activeSession && is_array($activeSession) && isset($activeSession['id']) && $activeSession['id'] === $student->id) {
                 // Sesi sama di-tap lagi -> Cek apakah sudah lewat cooldown (mencegah double-tap)
                 $timeSinceOpen = (now()->timestamp * 1000) - $activeSession['timestamp'];
                 if ($timeSinceOpen < 5000) { // Cooldown 5 detik
@@ -335,11 +339,15 @@ class RfidController extends Controller
             $activeStudent = Cache::get('active_student_session');
             if (!$activeStudent && app()->environment() !== 'local' && $firebaseUrl) {
                 try {
-                    $activeStudent = Http::timeout(1.0)->get($firebaseUrl . '/active_session.json')->json();
+                    $fetched = Http::timeout(1.0)->get($firebaseUrl . '/active_session.json')->json();
+                    // Pastikan data dari Firebase adalah array yang valid sebelum dipakai
+                    if (is_array($fetched) && isset($fetched['id'])) {
+                        $activeStudent = $fetched;
+                    }
                 } catch (\Exception $e) {}
             }
 
-            if (!$activeStudent) {
+            if (!$activeStudent || !is_array($activeStudent) || !isset($activeStudent['id'])) {
                 if ($firebaseUrl) {
                     dispatch(function () use ($firebaseUrl) {
                         try {
