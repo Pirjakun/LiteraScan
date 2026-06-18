@@ -4,4 +4,4 @@
 php artisan migrate --force
 
 # Start Nginx & PHP-FPM (webdevops default entrypoint)
-exec /entrypoint.sh
+exec /opt/docker/bin/entrypoint.sh supervisord
