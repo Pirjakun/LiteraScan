@@ -305,6 +305,16 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
     // Jika gagal terhubung ke server Laravel (Server mati / IP salah / Timeout)
     isSessionActive = false;
     
+    Serial.print("[Debug] HTTP POST GAGAL! Response Code: ");
+    Serial.println(responseCode);
+    if (responseCode == -1) Serial.println("[Debug] Detail: CONNECTION_REFUSED (Server mati/IP salah/SSL handshake gagal)");
+    else if (responseCode == -2) Serial.println("[Debug] Detail: SEND_HEADER_FAILED");
+    else if (responseCode == -3) Serial.println("[Debug] Detail: SEND_PAYLOAD_FAILED");
+    else if (responseCode == -4) Serial.println("[Debug] Detail: NOT_CONNECTED (WiFi terputus)");
+    else if (responseCode == -5) Serial.println("[Debug] Detail: CONNECTION_LOST (Koneksi terputus di tengah jalan)");
+    else if (responseCode == -8) Serial.println("[Debug] Detail: TOO_LESS_RAM (ESP32 kehabisan RAM)");
+    else if (responseCode == -11) Serial.println("[Debug] Detail: READ_TIMEOUT (Server tidak membalas)");
+    
     display.setCursor(0, 25);
     display.println("KONEKSI ERROR");
     display.display();
