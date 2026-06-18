@@ -25,6 +25,9 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions
 RUN chown -R application:application /app/storage /app/bootstrap/cache
 
+# Change port to 7860 for Hugging Face Spaces compatibility
+RUN find /opt/docker/etc/nginx/ -type f -exec sed -i 's/listen 80/listen 7860/g' {} +
+
 # Make run.sh executable and set as command
 RUN chmod +x /app/run.sh
 CMD ["/app/run.sh"]
