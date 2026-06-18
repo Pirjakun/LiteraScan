@@ -142,10 +142,47 @@
 @endsection
 
 @section('scripts')
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
+(function() {
+    // Inisialisasi Firebase
+    const firebaseConfig = {
+        databaseURL: "{{ env('FIREBASE_DATABASE_URL', 'https://your-project-id-default-rtdb.firebaseio.com') }}"
+    };
+    
+    let app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
+    const database = firebase.database();
+    let lastActiveSessionTimestamp = null;
+    let lastTransactionTimestamp = null;
+
+    // Listen status sesi aktif dari Firebase
+    database.ref('active_session').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            if (data.timestamp && data.timestamp !== lastActiveSessionTimestamp) {
+                lastActiveSessionTimestamp = data.timestamp;
+                fetchDashboardData();
+            }
+        } else {
+            // Sesi ditutup / timeout
+            fetchDashboardData();
+        }
+    });
+
+    // Listen transaksi terakhir dari Firebase untuk trigger refresh data
+    database.ref('last_transaction').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data && data.timestamp && data.timestamp !== lastTransactionTimestamp) {
+            lastTransactionTimestamp = data.timestamp;
+            fetchDashboardData();
+        }
+    });
+
     let lastActiveSession = null;
     window.countdownTimer = null;
     let secondsLeft = 0;
+
 
     function startCountdown(duration) {
         clearInterval(window.countdownTimer);
@@ -281,34 +318,30 @@
 
                 clearInterval(window.countdownTimer);
                 document.getElementById('session-timer').innerText = "00:00";
+
+                // Jika sebelumnya ada sesi aktif, tapi sekarang mati, update Firebase
+                if (lastActiveSession !== null) {
+                    database.ref('rfid_response').set({
+                        command: 'RESET_STANDBY',
+                        status: 'timeout',
+                        timestamp: Date.now()
+                    });
+                }
             }
+
 
             lastActiveSession = data.active_session;
         });
     }
 
-    window.pollingTimer = null;
-
-    function startPolling() {
-        clearInterval(window.pollingTimer);
-        window.pollingTimer = setInterval(fetchDashboardData, 3000);
-    }
-
-    function stopPolling() {
-        clearInterval(window.pollingTimer);
-    }
-
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
             fetchDashboardData();
-            startPolling();
-        } else {
-            stopPolling();
         }
     });
 
-    // Mulai polling pertama kali
+    // Mulai pertama kali
     fetchDashboardData();
-    startPolling();
+})();
 </script>
 @endsection

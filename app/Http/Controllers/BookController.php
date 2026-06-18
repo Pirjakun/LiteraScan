@@ -80,4 +80,48 @@ class BookController extends Controller
         Cache::forget('dashboard_metrics');
         return redirect()->route('books.index')->with('success', 'Data buku berhasil dihapus.');
     }
+
+    /**
+     * Export books to CSV.
+     */
+    public function export()
+    {
+        $books = Book::latest()->get();
+        $filename = 'data_buku_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($books) {
+            $file = fopen('php://output', 'w');
+            
+            // Add UTF-8 BOM for Excel
+            fputs($file, "\xEF\xBB\xBF");
+            
+            // Add separator directive for Excel
+            fputs($file, "sep=,\r\n");
+            
+            // Header columns
+            fputcsv($file, ['No', 'Judul Buku', 'Pengarang', 'RFID UID', 'Status'], ',');
+
+            foreach ($books as $index => $book) {
+                fputcsv($file, [
+                    $index + 1,
+                    $book->title,
+                    $book->author,
+                    $book->rfid_uid,
+                    $book->status === 'available' ? 'Tersedia' : 'Dipinjam',
+                ], ',');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

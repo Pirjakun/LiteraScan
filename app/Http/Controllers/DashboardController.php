@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Book;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
@@ -39,8 +40,48 @@ class DashboardController extends Controller
             ];
         });
 
-        // Active session is dynamic and must NOT be cached in the shared metrics cache
-        $data['active_session'] = Cache::get('active_student_session');
+        // Active session is dynamic and retrieved from Firebase to be stateless (Vercel-ready)
+        $firebaseUrl = rtrim(env('FIREBASE_DATABASE_URL'), '/');
+        $activeSession = null;
+        
+        if (app()->environment() === 'local') {
+            // Direct cache read for instant response locally
+            $activeSession = Cache::get('active_student_session');
+            
+            // Check if local session has expired
+            if ($activeSession && isset($activeSession['timestamp'])) {
+                $timeDiff = (now()->timestamp * 1000) - $activeSession['timestamp'];
+                if ($timeDiff > 60000) {
+                    Cache::forget('active_student_session');
+                    if ($firebaseUrl) {
+                        try {
+                            Http::put($firebaseUrl . '/active_session.json', null);
+                        } catch (\Exception $e) {}
+                    }
+                    $activeSession = null;
+                }
+            }
+        } else if ($firebaseUrl) {
+            try {
+                $activeSession = Http::get($firebaseUrl . '/active_session.json')->json();
+                
+                // Check if session timestamp is still within 60 seconds limit
+                if ($activeSession && isset($activeSession['timestamp'])) {
+                    $timeDiff = (now()->timestamp * 1000) - $activeSession['timestamp'];
+                    if ($timeDiff > 60000) {
+                        // Expired -> clean Firebase
+                        Http::put($firebaseUrl . '/active_session.json', null);
+                        $activeSession = null;
+                    }
+                }
+            } catch (\Exception $e) {
+                $activeSession = Cache::get('active_student_session');
+            }
+        } else {
+            $activeSession = Cache::get('active_student_session');
+        }
+
+        $data['active_session'] = $activeSession;
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json($data);

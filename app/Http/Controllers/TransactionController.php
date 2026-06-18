@@ -127,4 +127,60 @@ class TransactionController extends Controller
 
         return redirect()->route('transactions.index')->with('success', 'Catatan transaksi berhasil dihapus.');
     }
+
+    /**
+     * Export transactions to CSV.
+     */
+    public function export(Request $request)
+    {
+        $status = $request->input('status');
+        $query = Transaction::with(['student', 'book'])->latest();
+
+        if ($status === 'borrowed') {
+            $query->whereNull('returned_at');
+        } elseif ($status === 'returned') {
+            $query->whereNotNull('returned_at');
+        }
+
+        $transactions = $query->get();
+        $filename = 'data_transaksi_' . ($status ? $status . '_' : '') . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($transactions) {
+            $file = fopen('php://output', 'w');
+            
+            // Add UTF-8 BOM for Excel
+            fputs($file, "\xEF\xBB\xBF");
+            
+            // Add separator directive for Excel
+            fputs($file, "sep=,\r\n");
+            
+            // Header columns
+            fputcsv($file, ['No', 'Nama Anggota', 'NIS', 'Judul Buku', 'Status', 'Tanggal Pinjam', 'Tanggal Kembali', 'Denda'], ',');
+
+            foreach ($transactions as $index => $tx) {
+                fputcsv($file, [
+                    $index + 1,
+                    $tx->student ? $tx->student->name : 'Anggota dihapus',
+                    $tx->student ? $tx->student->nim : '-',
+                    $tx->book ? $tx->book->title : 'Buku dihapus',
+                    $tx->returned_at === null ? 'Dipinjam' : 'Dikembalikan',
+                    $tx->borrowed_at ? $tx->borrowed_at->format('d-m-Y H:i') : '-',
+                    $tx->returned_at ? $tx->returned_at->format('d-m-Y H:i') : '-',
+                    $tx->jumlah_denda > 0 ? 'Rp ' . number_format($tx->jumlah_denda, 0, ',', '.') : '-',
+                ], ',');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

@@ -89,4 +89,49 @@ class StudentController extends Controller
         Cache::forget('dashboard_metrics');
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil dihapus.');
     }
+
+    /**
+     * Export students to CSV.
+     */
+    public function export()
+    {
+        $students = Student::latest()->get();
+        $filename = 'data_siswa_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($students) {
+            $file = fopen('php://output', 'w');
+            
+            // Add UTF-8 BOM for Excel
+            fputs($file, "\xEF\xBB\xBF");
+            
+            // Add separator directive for Excel
+            fputs($file, "sep=,\r\n");
+            
+            // Header columns
+            fputcsv($file, ['No', 'Nama', 'NIS', 'RFID UID', 'Kelas', 'Tanggal Terdaftar'], ',');
+
+            foreach ($students as $index => $student) {
+                fputcsv($file, [
+                    $index + 1,
+                    $student->name,
+                    $student->nim,
+                    $student->rfid_uid,
+                    $student->major,
+                    $student->created_at ? $student->created_at->format('d-m-Y H:i') : '-',
+                ], ',');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

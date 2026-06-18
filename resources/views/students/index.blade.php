@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Siswa - PuSaKap')
+@section('title', 'Manajemen Siswa - LiteraScan')
 
 @section('content')
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
     <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
         <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-sky-soft text-sky-deep flex items-center justify-center shrink-0">
+            <div class="h-12 w-12 rounded-2xl bg-grape-soft text-grape-deep flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1-7.87"></path></svg>
             </div>
             <div>
@@ -14,10 +14,18 @@
                 <p class="text-xs text-slate-400 mt-0.5">Kelola data anggota perpustakaan beserta kartu RFID-nya</p>
             </div>
         </div>
-        <a href="{{ route('students.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-grape-mid hover:bg-grape-deep text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-            Tambah Siswa
-        </a>
+        <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <a href="{{ route('students.export') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 border border-grape-mid/20 text-grape-deep bg-grape-soft hover:bg-grape-deep hover:text-white rounded-full text-sm font-bold transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Ekspor Excel
+            </a>
+            <a href="{{ route('students.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-grape-deep to-sky-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/40 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                Tambah Siswa
+            </a>
+        </div>
     </div>
 
     <!-- Table Container -->
@@ -37,7 +45,7 @@
                     <tr class="hover:bg-slate-50 transition-all">
                         <td class="p-4">
                             <div class="flex items-center gap-3">
-                                <div class="h-9 w-9 rounded-full bg-sky-soft text-sky-deep flex items-center justify-center text-sm font-bold uppercase">
+                                <div class="h-9 w-9 rounded-full bg-grape-soft text-grape-deep flex items-center justify-center text-sm font-bold uppercase">
                                     {{ mb_substr($student->name, 0, 1) }}
                                 </div>
                                 <span class="font-bold text-slate-700">{{ $student->name }}</span>
@@ -69,7 +77,7 @@
                     <tr>
                         <td colspan="5" class="p-10 text-center text-slate-400">
                             <div class="flex flex-col items-center gap-2">
-                                <div class="h-14 w-14 rounded-full bg-sky-soft flex items-center justify-center text-sky-deep">
+                                <div class="h-14 w-14 rounded-full bg-grape-soft flex items-center justify-center text-grape-deep">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z"></path></svg>
                                 </div>
                                 <span class="text-sm font-semibold">Belum ada siswa. Yuk daftarkan anggota pertama!</span>

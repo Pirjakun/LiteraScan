@@ -8,4 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/rfid-scan', [RfidController::class, 'scan']);
+Route::post('/rfid/tap', [RfidController::class, 'handleTap']);
 Route::get('/session-status', [RfidController::class, 'getSessionStatus']);
+Route::get('/last-scan', [RfidController::class, 'getLastScan']);
+Route::post('/clear-scan', [RfidController::class, 'clearLastScan']);

@@ -1,32 +1,40 @@
 @extends('layouts.app')
 
-@section('title', 'Peminjaman & Pengembalian - PuSaKap')
+@section('title', 'Transaksi Sirkulasi - LiteraScan')
 
 @section('content')
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
     <div class="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
         <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-sky-soft text-sky-deep flex items-center justify-center shrink-0">
+            <div class="h-12 w-12 rounded-2xl bg-rose-soft text-rose-deep flex items-center justify-center shrink-0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                 </svg>
             </div>
             <div>
-                <h2 class="font-display text-xl font-bold text-slate-800">Peminjaman & Pengembalian</h2>
+                <h2 class="font-display text-xl font-bold text-slate-800">Transaksi Sirkulasi</h2>
                 <p class="text-xs text-slate-400 mt-0.5">Kelola data peminjaman, pengembalian, dan denda secara manual</p>
             </div>
         </div>
-        <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-grape-mid hover:bg-grape-deep text-sky-deep rounded-full text-sm font-bold transition-all shadow-lg shadow-grape-mid/50 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Tambah Pinjam Manual
-        </a>
+        <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <a href="{{ route('transactions.export', ['status' => $status]) }}" class="w-full sm:w-auto justify-center px-5 py-2.5 border border-rose-mid/20 text-rose-deep bg-rose-soft hover:bg-rose-deep hover:text-white rounded-full text-sm font-bold transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Ekspor Excel
+            </a>
+            <a href="{{ route('transactions.create') }}" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-rose-deep to-peach-deep hover:opacity-90 text-white rounded-full text-sm font-bold transition-all shadow-lg shadow-rose-mid/40 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Tambah Pinjam Manual
+            </a>
+        </div>
     </div>
 
     <!-- Filter Tabs -->
     <div class="flex flex-wrap gap-2 pb-2 border-b border-slate-100">
-        <a href="{{ route('transactions.index') }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ !$status ? 'bg-sky-soft text-sky-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
+        <a href="{{ route('transactions.index') }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ !$status ? 'bg-rose-soft text-rose-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
             Semua ({{ \App\Models\Transaction::count() }})
         </a>
         <a href="{{ route('transactions.index', ['status' => 'borrowed']) }}" class="px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all {{ $status === 'borrowed' ? 'bg-sky-soft text-sky-deep' : 'bg-slate-50 text-slate-500 hover:bg-slate-100' }}">
@@ -130,12 +138,12 @@
                     <tr>
                         <td colspan="7" class="p-10 text-center text-slate-400">
                             <div class="flex flex-col items-center gap-2">
-                                <div class="h-14 w-14 rounded-full bg-sky-soft flex items-center justify-center text-sky-deep">
+                                <div class="h-14 w-14 rounded-full bg-rose-soft flex items-center justify-center text-rose-deep">
                                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                     </svg>
                                 </div>
-                                <span class="text-sm font-semibold">Belum ada data peminjaman &amp; pengembalian</span>
+                                <span class="text-sm font-semibold">Belum ada data transaksi sirkulasi.</span>
                             </div>
                         </td>
                     </tr>
