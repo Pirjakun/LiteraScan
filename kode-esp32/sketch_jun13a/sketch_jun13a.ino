@@ -48,6 +48,12 @@ bool isStandby = false;
 unsigned long sessionStartTime = 0;
 bool isSessionActive = false;
 
+// Objek HTTP Client Global untuk Keep-Alive (re-use SSL session)
+WiFiClientSecure clientSecure;
+WiFiClient clientPlain;
+HTTPClient http;
+bool isHttpInitialized = false;
+
 void setup() {
   Serial.begin(115200);
   delay(500); 
@@ -133,19 +139,22 @@ void loop() {
 }
 
 void kirimDataKeServer(String uid) {
-  HTTPClient http;
-  WiFiClientSecure clientSecure;
-  WiFiClient clientPlain;
-  
-  if (String(serverUrl).startsWith("https")) {
-    clientSecure.setInsecure(); // Abaikan verifikasi SSL agar mudah
-    http.begin(clientSecure, serverUrl);
-  } else {
-    http.begin(clientPlain, serverUrl);
+  if (!isHttpInitialized) {
+    if (String(serverUrl).startsWith("https")) {
+      clientSecure.setInsecure(); // Abaikan verifikasi SSL agar mudah
+      // Batasi ukuran buffer TLS untuk stabilitas memori
+      clientSecure.setBufferSizes(2048, 1024);
+      http.begin(clientSecure, serverUrl);
+    } else {
+      http.begin(clientPlain, serverUrl);
+    }
+    http.setTimeout(10000); // Timeout 10 detik agar Laravel sempat memproses Firebase tanpa putus
+    isHttpInitialized = true;
   }
 
-  http.setTimeout(10000); // Timeout 10 detik agar Laravel sempat memproses Firebase tanpa putus
+  // Set header secara dinamis per request
   http.addHeader("Content-Type", "application/json");
+  http.addHeader("Connection", "keep-alive");
 
   StaticJsonDocument<200> doc;
   doc["uid"] = uid;
@@ -154,7 +163,12 @@ void kirimDataKeServer(String uid) {
 
   int httpResponseCode = http.POST(jsonPayload);
   prosesResponsServer(httpResponseCode, &http);
-  http.end();
+  
+  // Jika koneksi error/gagal, paksa reset/tutup client agar melakukan handshake ulang di tap berikutnya
+  if (httpResponseCode < 0) {
+    http.end();
+    isHttpInitialized = false;
+  }
 }
 
 void cekStatusSesiServer() {
