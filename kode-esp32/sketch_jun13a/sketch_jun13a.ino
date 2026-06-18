@@ -131,14 +131,14 @@ void loop() {
 
 void kirimDataKeServer(String uid) {
   HTTPClient http;
+  WiFiClientSecure clientSecure;
+  WiFiClient clientPlain;
   
   if (String(serverUrl).startsWith("https")) {
-    WiFiClientSecure client;
-    client.setInsecure(); // Abaikan verifikasi SSL agar mudah
-    http.begin(client, serverUrl);
+    clientSecure.setInsecure(); // Abaikan verifikasi SSL agar mudah
+    http.begin(clientSecure, serverUrl);
   } else {
-    WiFiClient client;
-    http.begin(client, serverUrl);
+    http.begin(clientPlain, serverUrl);
   }
 
   http.setTimeout(10000); // Timeout 10 detik agar Laravel sempat memproses Firebase tanpa putus
@@ -159,13 +159,14 @@ void cekStatusSesiServer() {
   String statusUrl = String(serverUrl);
   statusUrl.replace("/rfid/tap", "/session-status");
   
+  WiFiClientSecure clientSecure;
+  WiFiClient clientPlain;
+  
   if (statusUrl.startsWith("https")) {
-    WiFiClientSecure client;
-    client.setInsecure(); // Abaikan verifikasi SSL agar mudah
-    http.begin(client, statusUrl);
+    clientSecure.setInsecure(); // Abaikan verifikasi SSL agar mudah
+    http.begin(clientSecure, statusUrl);
   } else {
-    WiFiClient client;
-    http.begin(client, statusUrl);
+    http.begin(clientPlain, statusUrl);
   }
 
   http.setTimeout(1500); // Timeout 1.5 detik untuk session status check
