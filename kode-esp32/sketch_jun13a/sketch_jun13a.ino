@@ -44,6 +44,10 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 // Status tampilan untuk menghindari flickering
 bool isStandby = false;
 
+// Sesi lokal untuk mencegah lag HTTPS pinger
+unsigned long sessionStartTime = 0;
+bool isSessionActive = false;
+
 void setup() {
   Serial.begin(115200);
   delay(500); 
@@ -100,11 +104,10 @@ void loop() {
   // Selalu cek koneksi WiFi
   if (WiFi.status() != WL_CONNECTED) return;
 
-  // Cek berkala ke server untuk sinkronisasi status timeout sesi (setiap 3 detik)
-  static unsigned long lastCheck = 0;
-  if (millis() - lastCheck > 3000) { 
-    lastCheck = millis();
-    cekStatusSesiServer();
+  // Timeout sesi lokal (60 detik) untuk menghindari pinger HTTPS yang lambat
+  if (isSessionActive && (millis() - sessionStartTime > 60000)) {
+    isSessionActive = false;
+    tampilanAwal();
   }
 
   // Cek keberadaan kartu baru
@@ -208,6 +211,9 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
 
     if (status == "session_active") {
       // Sesi Anggota Terbuka
+      isSessionActive = true;
+      sessionStartTime = millis();
+      
       display.setCursor(0, 10);
       display.println(line1);
       display.setCursor(0, 30);
@@ -225,6 +231,8 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
 
     } else if (status == "session_closed") {
       // Sesi ditutup manual
+      isSessionActive = false;
+      
       display.setCursor(0, 20);
       display.println(line1);
       display.setCursor(0, 40);
@@ -245,6 +253,8 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
 
     } else if (status == "success") {
       // Transaksi Peminjaman / Pengembalian Sukses
+      isSessionActive = false;
+      
       display.setCursor(0, 5);
       display.println(line1);
       display.setCursor(0, 25);
@@ -267,6 +277,8 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
 
     } else {
       // Gagal / Error
+      isSessionActive = false;
+      
       display.setCursor(0, 20);
       display.println(line1);
       display.setCursor(0, 40);
@@ -279,6 +291,8 @@ void prosesResponsServer(int responseCode, HTTPClient* http) {
     }
   } else {
     // Jika gagal terhubung ke server Laravel (Server mati / IP salah / Timeout)
+    isSessionActive = false;
+    
     display.setCursor(0, 25);
     display.println("KONEKSI ERROR");
     display.display();
@@ -322,4 +336,3 @@ void resetRFIDReader() {
   rfid.PCD_AntennaOn();
   rfid.PCD_Init();
 }
-
