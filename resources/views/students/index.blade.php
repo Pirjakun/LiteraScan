@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Siswa - LiteraScan')
+@section('title', 'Manajemen Siswa - PuSaKap')
 
 @section('content')
 <div class="card rounded-3xl p-6 flex flex-col gap-6">
