@@ -14,7 +14,7 @@ const char* password = "KosongDelapan12";
 
 // --- Konfigurasi Server API Laravel ---
 // Ganti IP di bawah ini dengan IP laptop/server Laravel Anda jika berubah
-const char* serverUrl = "http://192.168.18.18:8000/api/rfid/tap";
+const char* serverUrl = "https://r4v4na-pusakap-dashboard.hf.space/api/rfid/tap";
 
 // --- Konfigurasi Pin RFID ---
 #define SDA_PIN  5
