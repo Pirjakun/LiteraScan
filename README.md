@@ -1,3 +1,12 @@
+---
+title: pusakap-dashboard
+emoji: 📚
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
 # 📚 LITERA-SCAN - Live Circulation Dashboard & IoT Smart Library
 
 LITERA-SCAN adalah sistem manajemen sirkulasi perpustakaan pintar berbasis IoT yang mengintegrasikan pembaca kartu RFID (ESP32) dengan sistem backend kustom Laravel. Proyek ini memfasilitasi pencatatan peminjaman dan pengembalian buku secara otomatis melalui pemindaian tag RFID serta visualisasi sirkulasi real-time melalui dashboard interaktif.
