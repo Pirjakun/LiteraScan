@@ -48,6 +48,9 @@ void setup() {
   Serial.begin(115200);
   delay(500); 
   
+  // Matikan Watchdog Loop agar ESP32 tidak reset saat melakukan handshake SSL (HTTPS) yang lambat
+  disableLoopWDT();
+  
   // 1. Inisialisasi OLED terlebih dahulu agar status terlihat sejak awal
   Wire.begin(OLED_SDA, OLED_SCL);
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
