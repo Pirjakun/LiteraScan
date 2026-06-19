@@ -7,9 +7,9 @@ sdk: docker
 pinned: false
 ---
 
-# 📚 LITERA-SCAN - Live Circulation Dashboard & IoT Smart Library
+# 📚 PuSaKap - Live Circulation Dashboard & IoT Smart Library
 
-LITERA-SCAN adalah sistem manajemen sirkulasi perpustakaan pintar berbasis IoT yang mengintegrasikan pembaca kartu RFID (ESP32) dengan sistem backend kustom Laravel. Proyek ini memfasilitasi pencatatan peminjaman dan pengembalian buku secara otomatis melalui pemindaian tag RFID serta visualisasi sirkulasi real-time melalui dashboard interaktif.
+PuSaKap adalah sistem manajemen sirkulasi perpustakaan pintar berbasis IoT yang mengintegrasikan pembaca kartu RFID (ESP32) dengan sistem backend kustom Laravel. Proyek ini memfasilitasi pencatatan peminjaman dan pengembalian buku secara otomatis melalui pemindaian tag RFID serta visualisasi sirkulasi real-time melalui dashboard interaktif.
 
 ---
 
@@ -116,8 +116,8 @@ Digunakan oleh sistem untuk mengecek apakah sesi aktif masih berlaku. Jika timeo
 
 ### 1. Kloning & Persiapan Dependensi
 ```bash
-git clone https://github.com/Pirjakun/LiteraScan.git
-cd LiteraScan
+git clone https://github.com/Pirjakun/PuSaKap.git
+cd PuSaKap
 composer install
 npm install
 ```
