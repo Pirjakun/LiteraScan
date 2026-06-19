@@ -123,7 +123,7 @@ npm install
 ```
 
 ### 2. Konfigurasi Environment (`.env`)
-Salin file `.env.example` menjadi `.env`, lalu sesuaikan kredensial MySQL Anda:
+Salin file `.env.example` menjadi `.env`, lalu sesuaikan kredensial MySQL serta kredensial administrator awal Anda:
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -131,14 +131,19 @@ DB_PORT=3306
 DB_DATABASE=literascan_db
 DB_USERNAME=root
 DB_PASSWORD=
+
+# Kredensial Administrator Awal
+ADMIN_EMAIL=admin@pusakap.com
+ADMIN_PASSWORD=admin123
 ```
 
 ### 3. Migrasi & Seeding Data Awal
-Jalankan migrasi database beserta pengisian data simulasi RFID:
+Jalankan migrasi database beserta pengisian data awal (Simulasi RFID dan Akun Administrator):
 ```bash
 php artisan migrate --seed
 ```
-*Data simulasi yang akan dimasukkan:*
+*Data awal dan simulasi yang akan dimasukkan:*
+* **Akun Admin:** Email dan password diambil dari `.env` (Default: `admin@pusakap.com` / `admin123`)
 * **Ayu** (RFID: `A2 42 E2 2E`)
 * **Budi** (RFID: `C6 A5 E2 2E`)
 * **Pirja_Admin** (RFID: `5F E5 97 C2`)
